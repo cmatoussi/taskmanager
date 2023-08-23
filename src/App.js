@@ -25,6 +25,8 @@ function App() {
         <Today
         dailyTasks={dailyTasks}
         setDailyTasks={setDailyTasks}
+        todos={todos}
+        setTodos={setTodos}
         />
         } />
         <Route path="/manage" element={

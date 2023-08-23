@@ -1,16 +1,25 @@
 import React from 'react';
 
 const Today = ({
-  dailyTasks, setDailyTasks}) => {
+  dailyTasks, setDailyTasks, todos, setTodos}) => {
   const name= ["Main Project(3 hours):", "3 Shorter Tasks:", "3 Maintainance Tasks: "];
   const deleteHandler = (i,task) => {
-    setDailyTasks(prevDailyTasks => {
-      const updatedTasks = [...prevDailyTasks];
+    setDailyTasks(dailyTasks => {
+      const updatedTasks = [...dailyTasks];
       updatedTasks[i] = updatedTasks[i].filter(el => el.id !== task.id);
       return updatedTasks;
     });
 };
-const completeHandler = () => {}
+const completeHandler = () => {
+      setTodos(todos.map(item => {
+          if(item.id === todo.id){
+             return {
+              ...item, completed: !item.completed
+             };
+          }
+             return item;
+      }));
+}
 
   return (
     <div className="flex-container">

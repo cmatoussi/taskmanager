@@ -1,24 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import { IoIosOptions} from "react-icons/io";
 
 const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedButton, setSelectedButton, dailyTasks,
     setDailyTasks}) => {
+    const [todoForPopup, setTodoForPopup]= useState(null);
     //Events
     const deleteHandler = () => {
         setTodos(todos.filter((el) => el.id !== todo.id ));
     };
     const completeHandler = () => {
-        setTodos(todos.map(item => {
-            if(item.id === todo.id){
-               return {
-                ...item, completed: !item.completed
-               };
-            }
-               return item;
-        })
-        );
+        if (todo) {
+            setTodos(todos.map(item => {
+                if(item.id === todo.id){
+                   return {
+                    ...item, completed: !item.completed
+                   };
+                }
+                   return item;
+            }));
+        }
     };
-    const togglePopup = () => {
+    
+    const togglePopup = (todo) => {
+        setTodoForPopup(todo); // Set the todo for the popup
         setShowPopup(!showPopup);
       };
     
@@ -26,25 +30,26 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
         setSelectedButton(buttonValue);
       };
       const handleSubmit = () => {
-        const newDailyTasks = dailyTasks
+        let newDailyTasks = [...dailyTasks];
+      
         switch (selectedButton) {
-            case "button1":
-                newDailyTasks[0].push(todo)
-                setDailyTasks(newDailyTasks)
-                break;
-            case "button2":
-                newDailyTasks[1].push(todo)
-                setDailyTasks(newDailyTasks)
-                break;
-            case "button3":
-                newDailyTasks[2].push(todo)
-                setDailyTasks(newDailyTasks)
-                break;              
-            default:
-              break;
-          }
+          case "button1":
+            newDailyTasks[0].push(todoForPopup);
+            break;
+          case "button2":
+            newDailyTasks[1].push(todoForPopup);
+            break;
+          case "button3":
+            newDailyTasks[2].push(todoForPopup);
+            break;
+          default:
+            break;
+        }
+      
+        setDailyTasks(newDailyTasks);
         togglePopup();
       };
+      
     return (
         <div className = "todo">
             <li className={`todo-item ${todo.completed ? "completed": ""}`}>
@@ -55,7 +60,7 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
             <button onClick={deleteHandler} className="trash-btn">
                 <i className="fas fa-trash"></i>
             </button>
-            <IoIosOptions size= "40px" onClick={togglePopup}/>
+            <IoIosOptions size="40px" onClick={() => togglePopup(todo)} />
                 {showPopup && (
                     <div className="popup">
                     <p> Add to daily tasks:</p>
@@ -95,8 +100,7 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
                             {' 3 maintainance tasks'}
                         </label>
                         </li>
-                    <button onClick={handleSubmit}>submit</button>
-                    </div>
+                        {todoForPopup && <button onClick={handleSubmit}>submit</button>}                    </div>
 
                 )}
         </div>
