@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import { IoIosOptions} from "react-icons/io";
 
-const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedButton, setSelectedButton, dailyTasks,
+const Todo = ({text, todo, todos, setTodos, selectedButton, setSelectedButton, dailyTasks,
     setDailyTasks}) => {
     const [todoForPopup, setTodoForPopup]= useState(null);
+    const [showPopup, setShowPopup] = useState(false); 
     //Events
     const deleteHandler = () => {
         setTodos(todos.filter((el) => el.id !== todo.id ));
@@ -19,6 +20,18 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
                    return item;
             }));
         }
+
+        setDailyTasks((updatedTasks) =>
+        updatedTasks.map((taskList) =>
+            taskList.map((task ) =>{
+            if(task.id === todo.id){
+              return {
+               ...task, completed: !task.completed
+              };
+           }
+              return task;
+            }
+             )));
     };
     
     const togglePopup = (todo) => {
@@ -29,24 +42,48 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
       const handleButtonSelect = (buttonValue) => {
         setSelectedButton(buttonValue);
       };
-      const handleSubmit = () => {
+      const manageDailies = () => {
         let newDailyTasks = [...dailyTasks];
-      
+        // add task to daily tasks
         switch (selectedButton) {
           case "button1":
-            newDailyTasks[0].push(todoForPopup);
+            if (newDailyTasks[0].length === 1) {
+              alert("you have already added one project for today");}
+            else{
+            newDailyTasks[0].push(todoForPopup);}
             break;
           case "button2":
-            newDailyTasks[1].push(todoForPopup);
+            if (newDailyTasks[1].length === 3) {
+              alert("you have already added 3 short tasks for today");
+            } else {
+            newDailyTasks[1].push(todoForPopup);}
             break;
           case "button3":
-            newDailyTasks[2].push(todoForPopup);
+            if (newDailyTasks[2].length === 3) {
+              alert("you have already added 3 maintenance tasks for today");
+            } else {
+            newDailyTasks[2].push(todoForPopup);}
+            break;
+          case "button4":
+            newDailyTasks[3].push(todoForPopup);
             break;
           default:
             break;
         }
-      
         setDailyTasks(newDailyTasks);
+      }
+      const handleSubmit = () => {
+        let found = false;
+        //avoid duplicates
+        dailyTasks.forEach((taskList) => {
+          taskList.forEach((item) => {
+            if (todo.id === item.id) {
+              alert("You have already added this task to your daily tasks.");
+              found = true;
+            }
+          });
+        });     
+        if (!found){ manageDailies(); }   
         togglePopup();
       };
       
@@ -100,8 +137,20 @@ const Todo = ({text, todo, todos, setTodos, showPopup, setShowPopup, selectedBut
                             {' 3 maintainance tasks'}
                         </label>
                         </li>
-                        {todoForPopup && <button onClick={handleSubmit}>submit</button>}                    </div>
-
+                        <li>
+                        <label>
+                            <input
+                            type="radio"
+                            name="options"
+                            value="button4"
+                            checked={selectedButton === "button4"}
+                            onChange={() => handleButtonSelect("button4")}
+                            />
+                            {'Additional Tasks'}
+                        </label>
+                        </li>
+                        {todoForPopup && <button className="submit-btn" onClick={handleSubmit}>submit</button>}    
+                        </div>
                 )}
         </div>
     );

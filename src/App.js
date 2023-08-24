@@ -9,9 +9,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   const [inputText, setInputText] = useState("");
   const [todos, setTodos] = useState([]);
-  const [dailyTasks, setDailyTasks] = useState([[],[],[]]);
-  const [showPopup, setShowPopup] = useState(false);
+  const [dailyTasks, setDailyTasks] = useState([[],[],[],[]]);
   const [selectedButton, setSelectedButton] = useState(null);
+  const [strike, setStrike] = useState(0);
 
   return (
     <div className="App">
@@ -20,6 +20,7 @@ function App() {
         <div>
         <Header />
         </div>
+        <div>{strike}</div>
         <Routes>
         <Route path="/today" element={
         <Today
@@ -27,6 +28,8 @@ function App() {
         setDailyTasks={setDailyTasks}
         todos={todos}
         setTodos={setTodos}
+        strike={strike}
+        setStrike={setStrike}
         />
         } />
         <Route path="/manage" element={
@@ -35,8 +38,6 @@ function App() {
          setTodos = {setTodos}
          inputText={inputText}
          setInputText={setInputText}
-         showPopup={showPopup}
-         setShowPopup={setShowPopup}
          selectedButton={selectedButton}
          setSelectedButton={setSelectedButton}
          dailyTasks={dailyTasks}

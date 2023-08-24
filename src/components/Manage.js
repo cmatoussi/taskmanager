@@ -1,25 +1,26 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Form from "./Form";
 import TodoList from "./TodoList";
 const Manage = ({
     todos, setTodos,inputText,
-    setInputText, status, setStatus, showPopup,
-    setShowPopup, selectedButton, setSelectedButton,
+    setInputText, selectedButton, setSelectedButton,
     dailyTasks, setDailyTasks}) => {
+      const header = todos.length === 0 ? "No Tasks Added Yet" : "Manage My Tasks";
+
   return (
     <div>
+      <h1 style={{marginTop: '2.5%'}}>Add New Tasks</h1>
         <Form 
         inputText={inputText}
         todos = {todos}
         setTodos = {setTodos}
         setInputText={setInputText}
-        setStatus={setStatus}
         />
+      <h1 style={{marginBottom: '2%'}}>{header}</h1>
+      
       <TodoList 
         todos={todos}
         setTodos={setTodos}
-        showPopup={showPopup}
-        setShowPopup={setShowPopup}
         selectedButton={selectedButton}
         setSelectedButton={setSelectedButton}
         dailyTasks={dailyTasks}

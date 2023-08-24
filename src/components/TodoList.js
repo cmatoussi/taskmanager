@@ -1,8 +1,7 @@
 import React from 'react';
 import Todo from "./Todo";
-const TodoList = ({ filteredTodos,
+const TodoList = ({
      todos,setTodos,
-     showPopup, setShowPopup,
      selectedButton, setSelectedButton,
      dailyTasks, setDailyTasks
     }) => {
@@ -16,8 +15,6 @@ const TodoList = ({ filteredTodos,
                 todo={todo} 
                 key={todo.id} 
                 text={todo.text}
-                showPopup={showPopup}
-                setShowPopup={setShowPopup}
                 selectedButton={selectedButton}
                 setSelectedButton={setSelectedButton}
                 dailyTasks={dailyTasks}
