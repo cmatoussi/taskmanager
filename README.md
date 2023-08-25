@@ -1,4 +1,4 @@
-#Task Manger set up:
+# TaskManger set up:
 - Clone or download repository
 - navigate to project folder
 - run npm start
