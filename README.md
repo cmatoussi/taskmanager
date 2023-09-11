@@ -21,11 +21,7 @@
 
 - Completed:
   - lists overall completed tasks
-    
-    <img width="392" alt="image" src="https://github.com/cmatoussi/taskmanager/assets/46854568/f36af1f0-98fa-45dd-a4fe-90f877c12abb">
-
 - Active:
   - lists active tasks
-    
-    <img width="359" alt="image" src="https://github.com/cmatoussi/taskmanager/assets/46854568/c3f8a6ea-c702-408d-a951-d3c6ae678699">
+  
 
