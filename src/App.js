@@ -1,26 +1,44 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Make sure to import Routes
 import "./App.css";
 import Today from "./components/Today";
 import Manage from "./components/Manage";
 import Header from "./components/Header";
 import Active from "./components/Active";
 import Completed from "./components/Completed";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Stats from "./components/Stats";
+import RedirectToManage from "./components/RedirectToManage";
 function App() {
+  const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+  const [todos, setTodos] = useState(savedTodos);
+
   const [inputText, setInputText] = useState("");
-  const [todos, setTodos] = useState([]);
   const [dailyTasks, setDailyTasks] = useState([[],[],[],[]]);
   const [selectedButton, setSelectedButton] = useState(null);
   const [strike, setStrike] = useState(0);
 
+  useEffect(() => {
+    // To save data to localStorage
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+
   return (
-    <div className="App">
     <Router>
+    <div className="App">
       <div>
         <div>
-        <Header />
+        <Header 
+        strike={strike}
+        />
         </div>
-        <div>{strike}</div>
+        <div className="page-content">
+        <div className="stats-wrapper">
+          <Stats
+            strike={strike}
+            todos={todos}
+          />
+        </div>
         <Routes>
         <Route path="/today" element={
         <Today
@@ -54,12 +72,13 @@ function App() {
         todos={todos}
         />
         }/>
+        <Route path="/" element={<RedirectToManage />} />
 
       </Routes>
-
-      </div>
-    </Router>
     </div>
+    </div>
+    </div>
+    </Router>
   );
 
 }

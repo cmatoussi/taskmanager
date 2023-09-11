@@ -20,40 +20,40 @@ const Today = ({ dailyTasks, setDailyTasks, todos, setTodos, strike, setStrike }
           : taskList
       )
     );
-   
-  }
+  
+    // Update corresponding task in the todos array
+    updateTodos(task);
+  };
+  
   const updateTodos = (task) => {
     if (task) {
-      setTodos(todos.map(item => {
-          if(item.id === task.id){
-             return {
-              ...item, completed: !item.completed
-             };
-          }
-             return item;
-      }));
-    }
-  }
-  const updateStrikes = () => {
-    // get strike if all main tasks in a day are finished
-    let finished = true; // Assume all items are completed initially
-    const minSize = [1, 3, 3];
-  
-    for (let i = 0; i < 3; i++) {
-      const taskList = dailyTasks[i];
-      let allCompleted = taskList.every((item) => item.completed);
-      console.log(allCompleted);
-  
-      if (!allCompleted || dailyTasks[i].length < minSize[i]) {
-        finished = false;
-        break;
-      }
-    }
-    if (finished) {
-      setStrike(strike + 1);
+      setTodos((prevTodos) =>
+        prevTodos.map((item) =>
+          item.id === task.id ? { ...item, completed: !item.completed } : item
+        )
+      );
     }
   };
   
+
+  const updateStrikes = () => {
+    const lastStrikeUpdate = localStorage.getItem('lastStrikeUpdate');
+    const currentTime = new Date().getTime();
+    let completedTaskCount = 0; // Initialize the count
+  // Check if all last tasks in main task lists are completed
+    for (let i = 0; i < 3; i++) {
+      const taskList = dailyTasks[i];
+      // Count completed tasks in the current task list
+        const completedInList = taskList.filter((item) => item.completed);
+        completedTaskCount += completedInList.length;
+      }
+    // Update strike count if all tasks are completed
+    if ((completedTaskCount === 6) && (!lastStrikeUpdate || currentTime - parseInt(lastStrikeUpdate, 10) >= 24 * 60 * 60 * 1000)) {
+      setStrike(strike + 1);
+       // Update the last strike update timestamp in localStorage
+       localStorage.setItem('lastStrikeUpdate', currentTime.toString());
+    }
+};  
   const completeHandler = (index, task) => {
     //update dailies
     updateDailies(index, task);

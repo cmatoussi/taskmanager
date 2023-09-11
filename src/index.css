@@ -76,7 +76,7 @@ form button:hover {
 
 }
 .todo-input{
-  width: 28%;
+  width: 100%;
 }
 .complete-btn {
   background: rgb(51, 202, 78);
@@ -262,4 +262,56 @@ p {
   justify-content: center;
   align-items: center; 
   margin-top: 2%;
+}
+
+.stats-container {
+  display: flex;
+  background-color: white;
+}
+
+.stats-wrapper {
+  margin-right: 15%;
+}
+.page-content{
+  display: flex;
+}
+.stat-content{
+  display: flex;
+  flex-flow: column nowrap; 
+  text-align: left; 
+  margin: 10% 10%; 
+  width: 100%;
+  height: 125%;
+  align-items: stretch;
+  background-color: white;
+  padding: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+.stat-content h4 {
+  margin: 5% 0; /* 2% top and bottom margin, 0 left and right margin for each h4 */
+}
+
+/* CSS for the progress bar */
+.chart {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
+}
+
+.chart > div {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Red line for active tasks */
+.chart .active-bar {
+  background-color: #FF5733;
+}
+
+/* Green line for completed tasks */
+.chart .completed-bar {
+  background-color: #33FF57;
 }

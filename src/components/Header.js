@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import { IoMdFlame} from "react-icons/io";
 
-const Header = () => {
+
+const Header = ({strike}) => {
   const [activeLink, setActiveLink] = useState('');
 
   const handleLinkClick = (link) => {
@@ -39,6 +41,8 @@ const Header = () => {
         >
           Completed
         </Link>
+        <div style={{marginLeft: '5%'}}>{strike}</div>
+        <IoMdFlame size="30px" color="red"/> 
       </nav>
     </div>
   );
