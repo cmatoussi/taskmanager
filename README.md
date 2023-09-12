@@ -15,13 +15,11 @@
   - if you finish all main tasks in one day you your productivity strike increments by one
   - you can check off a completed task in the daily tasks
   - you can delete a task from daily tasks and add another one in the task manager (it won't remove it from the list of general tasks)
-  
-  <img width="939" alt="image" src="https://github.com/cmatoussi/taskmanager/assets/46854568/c00e9ea1-1f36-46d5-b241-93a93ba44927">
-    
-
+      
 - Completed:
   - lists overall completed tasks
 - Active:
   - lists active tasks
   
-
+# DEMO
+ [View full Demo](https://youtu.be/edNhjpg7i5E)
